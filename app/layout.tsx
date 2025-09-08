@@ -1,53 +1,55 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
-import "./globals.css";
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
-
+import './globals.css'
+import TanStackProvider from '@/components/TanStackProvider/TanStackProvider'
+import Header from '@/components/Header/Header'
+import Footer from '@/components/Footer/Footer'
+import AuthProvider from '@/components/AuthProvider/AuthProvider'
 
 const roboto = Roboto({
-   subsets: [ 'latin' ], 
-   weight: [ '400' , '700' ],
-   variable: '--font-roboto' , 
-   display: 'swap' ,
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-roboto',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: "Notehub App",
-  description: "Small note app",
+  title: 'Notehub App',
+  description: 'Small note app',
   openGraph: {
     title: `Notehub App`,
-    description: "Small app with notes",
+    description: 'Small app with notes',
     url: `https://08-zustand-kappa-cyan.vercel.app/`,
-    siteName: "NoteHub",
+    siteName: 'NoteHub',
     images: [
       {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
         width: 1200,
         height: 630,
-        alt: "og notehub",
+        alt: 'og notehub',
       },
     ],
-    type: "article",
+    type: 'article',
   },
-};
+}
 
 export default function RootLayout({
   children,
   modal,
 }: Readonly<{
-  children: React.ReactNode;
-  modal: React.ReactNode;
+  children: React.ReactNode
+  modal: React.ReactNode
 }>) {
   return (
     <html lang="en">
       <body className={roboto.variable}>
         <TanStackProvider>
-        <Header/>
-          {children}
-          {modal}
+          <AuthProvider>
+            <Header />
+            {children}
+            {modal}
             <Footer />
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>
