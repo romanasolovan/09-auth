@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { ApiError } from 'next/dist/server/api-utils'
 import { useAuthStore } from '@/lib/store/authStore'
 
-export default function signUpPage() {
+export default function SignUpPage() {
   const router = useRouter()
   const [error, setError] = useState('')
   const setUser = useAuthStore((state) => state.setUser)

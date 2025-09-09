@@ -7,7 +7,7 @@ import { Credentials, login } from '@/lib/api/clientApi'
 import { ApiError } from 'next/dist/server/api-utils'
 import { useAuthStore } from '@/lib/store/authStore'
 
-export default function signInPage() {
+export default function SignInPage() {
   const router = useRouter()
   const [error, setError] = useState('')
 
