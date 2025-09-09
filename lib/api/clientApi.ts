@@ -25,10 +25,6 @@ export interface NewNote {
   tag: string
 }
 
-export interface SessionStatus {
-  success: boolean
-}
-
 export default async function fetchNotes(
   page: number,
   searchQuery?: string,
@@ -73,6 +69,10 @@ export const login = async (credentials: Credentials) => {
 
 export const logout = async () => {
   await nextServer.post<User>(`/auth/logout`)
+}
+
+export interface SessionStatus {
+  success: boolean
 }
 
 export const checkSession = async () => {

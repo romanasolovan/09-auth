@@ -1,47 +1,44 @@
-'use client';
+'use client'
 
-
-import { fetchNoteById } from '@/lib/api/clientApi';
-import { useQuery } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
-import css from './NoteDetails.module.css';
-import { notFound } from 'next/navigation';
+import { fetchNoteById } from '@/lib/api/clientApi'
+import { useQuery } from '@tanstack/react-query'
+import { useParams, useRouter } from 'next/navigation'
+import css from './NoteDetails.module.css'
+import Loader from '@/components/Loader/Loader'
+import ErrorMessage from '@/components/ErrorMessage/ErrorMessage'
 
 export default function NoteDetailsClient() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>()
 
   const {
     data: note,
     isLoading,
+    isSuccess,
     error,
   } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
-  });
-
-  if (isLoading) return <p>Loading, please wait...</p>;
-
-  if (!note || error) {
-    notFound();
-  }
-
-  // if (error || !note) return <p>Something went wrong.</p>;
+  })
 
   return (
     <>
-      <button
-        className={css.returnbtn}
-        type="button"
-        onClick={() => {
-          router.back();
-        }}
-      >
-        Back
-      </button>
-    
+      {isSuccess && (
+        <div className={css.container}>
+          <div className={css.item}>
+            <div className={css.header}>
+              <h2>{note.title}</h2>
+            </div>
+            <p className={css.content}>{note.content}</p>
+            <p className={css.date}>{note.createdAt}</p>
+          </div>
+        </div>
+      )}
+
+      {isLoading && <Loader />}
+      {error && <ErrorMessage />}
     </>
-  );
+  )
 }
